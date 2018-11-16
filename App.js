@@ -35,11 +35,11 @@ class Blink extends Component {
     constructor(props) {
         super(props);
         this.state = {showText: true}
-        setInterval(()=>{
-            this.setState(previousState =>{
+        setInterval(() => {
+            this.setState(previousState => {
                 return {showText: !previousState.showText};
             })
-        },1000);
+        }, 1000);
     }
 
 
@@ -51,21 +51,33 @@ class Blink extends Component {
     }
 }
 
-export default class App extends Component<Props> {
+class Movie extends Component {
     render() {
-        let pic = {
-            uri: "https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=3b03c837572c11dfcadcb771024e09b5/ae51f3deb48f8c54cd34cafb3a292df5e1fe7f7a.jpg"
-        };
-        let NAME_DATA = ["小明", "小红", "小蓝"];
+        return (
+            <View style={styles.movie}>
+                <Image style={{width: 200, height: 100}} source={{uri:this.props.url}}/>
+                <Text>{this.props.name}</Text>
+                <Text>{this.props.year}</Text>
+            </View>
+        );
+    }
+}
+
+const MOVIE_DATA = [
+    {
+        title: "标题",
+        year: "2018",
+        url: "https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=3b03c837572c11dfcadcb771024e09b5/ae51f3deb48f8c54cd34cafb3a292df5e1fe7f7a.jpg"
+    }
+];
+
+export default class App extends Component<Props> {
+
+    render() {
+        const data = MOVIE_DATA[0];
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>Welcome to 2React Native!</Text>
-                <Text style={styles.instructions}>To get started, edit App.js</Text>
-                <Text style={styles.instructions}>Code by Xuan</Text>
-                <Image source={pic} style={styles.img}/>
-                <ListName name={NAME_DATA}/>
-                <Blink text='闪试试'/>
-                <View style={{width:50,height:50, backgroundColor: 'powderblue'}}/>
+                <Movie url={data.url} name={data.title} year={data.year}/>
             </View>
         );
     }
@@ -92,4 +104,8 @@ const styles = StyleSheet.create({
         width: 200,
         height: 300,
     },
+    movie: {
+        flex: 1,
+        flexDirection: 'row'
+    }
 });
